@@ -33,14 +33,14 @@ public class Main {
         // NOUN VALIDATION
         System.out.println("Enter a noun:  ");
         String noun;
-        String[] forbiddenWordsArray = {"dork", "douche", "idiot", "moron", "idiot"};
+        String[] forbiddenWordsArray = {"dork", "douche", "idiot", "moron", "dumb"};
         boolean isInvalidWord;
 
         do {
             isInvalidWord = true;
             noun = scanner.nextLine();
             for (String word : forbiddenWordsArray) {
-                if (noun.equalsIgnoreCase(word)) {
+                if (noun.toLowerCase().contains(word)) {
                     System.out.println("This language is not allowed! Please reenter the name!");
                     isInvalidWord = false;
                     break;
