@@ -9,12 +9,12 @@ public class Prompter {
         this.game = game;
     }
 
-    public boolean promptForGuess() {
+    public void promptForGuess() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter a later:   ");
         String guessInput = scanner.nextLine();
         char guess = guessInput.charAt(0);
-        return game.applyGuess(guess);
+        game.applyGuess(guess);
     }
 
     public void displayProgress(){
