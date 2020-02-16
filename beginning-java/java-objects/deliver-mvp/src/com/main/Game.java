@@ -1,7 +1,7 @@
 package com.main;
 
 public class Game {
-    public static final int MAX_MISSES = 7;
+
     private String answer;
     private String hits;
     private String misses;
@@ -49,7 +49,7 @@ public class Game {
     }
 
     public int getRemainingTries() {
-        return MAX_MISSES - misses.length();
+        return Constants.MAX_MISSES - misses.length();
     }
 
     public String getCurrentProgress() {
