@@ -1,21 +1,22 @@
 package com.teamtreehouse;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 public class Prompter {
     private BufferedReader mReader;
     private Set<String> mCensoredWords;
+    private Scanner mScanner;
 
     public Prompter() {
         mReader = new BufferedReader(new InputStreamReader(System.in));
+        mScanner = new Scanner(System.in);
         loadCensoredWords();
     }
 
@@ -41,7 +42,8 @@ public class Prompter {
             e.printStackTrace();
             System.exit(0);
         }
-        // TODO:csd - Print out the results that were gathered here by rendering the template
+        String render = tmpl.render(results);
+        System.out.println(render);
     }
 
     /**
@@ -52,7 +54,7 @@ public class Prompter {
      * @throws IOException
      */
     public List<String> promptForWords(Template tmpl) throws IOException {
-        List<String> words = new ArrayList<String>();
+        List<String> words = new ArrayList<>();
         for (String phrase : tmpl.getPlaceHolders()) {
             String word = promptForWord(phrase);
             words.add(word);
@@ -67,8 +69,25 @@ public class Prompter {
      * @param phrase The word that the user should be prompted.  eg: adjective, proper noun, name
      * @return What the user responded
      */
-    public String promptForWord(String phrase) {
-        // TODO:csd - Prompt the user for the response to the phrase, make sure the word is censored, loop until you get a good response.
-        return "";
+    public String promptForWord(String phrase) throws IOException {
+        String word = "";
+        boolean isGoodResponse = false;
+        System.out.printf("Enter %s:%n", phrase);
+        do {
+            word = mScanner.nextLine();
+
+            if (!mCensoredWords.contains(word.toLowerCase())) {
+                isGoodResponse = true;
+            }
+
+        } while (!isGoodResponse);
+
+        return word;
+    }
+
+    public String promptForTemplate() throws IOException{
+        System.out.println("Please give your story template. Each place holder word to be wrapped in double underscores. Template Example: ");
+        System.out.println("Hello __name__ You are a __adjective__ __noun__.");
+        return mScanner.nextLine();
     }
 }
