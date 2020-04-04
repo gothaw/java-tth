@@ -4,13 +4,10 @@ import com.teamtreehouse.jobs.model.Job;
 import com.teamtreehouse.jobs.service.JobService;
 
 import java.io.IOException;
-import java.sql.SQLOutput;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class App {
@@ -31,11 +28,59 @@ public class App {
     }
 
     private static void explore(List<Job> jobs) {
-        getSnippetWordCountsStream(jobs).forEach((key, value) -> System.out.printf("'%s' occurs %d times %n", key ,value));
+        List<String> companies = jobs.stream()
+                .map(Job::getCompany)
+                .distinct()
+                .sorted()
+                .collect(Collectors.toList());
+
+        int pageSize = 20;
+        int numPages = companies.size() / pageSize;
+
+        IntStream.iterate(1, i -> i + pageSize)
+                .mapToObj(i -> String.format("%d. %s", i, companies.get(i)))
+                .limit(numPages)
+                .forEach(System.out::println);
+    }
+
+    /**
+     * Displays companies names using range
+     *
+     * @param companies
+     */
+    private static void displayCompaniesMenuUsingRange(List<String> companies) {
+        IntStream.rangeClosed(1, 20)
+                .mapToObj(i -> String.format("%d. %s", i, companies.get(i - 1)))
+                .forEach(System.out::println);
+    }
+
+    /**
+     * Displays companies names imperatively
+     *
+     * @param companies
+     */
+    private static void displayCompaniesMenuImperatively(List<String> companies) {
+        for (int i = 0; i < 20; i++) {
+            System.out.printf("%d. %s %n", i + 1, companies.get(i));
+        }
+    }
+
+    /**
+     * Lucky search - returns first job with the keyword
+     *
+     * @param jobs
+     * @param searchTerm
+     */
+    private static void luckySearchJob(List<Job> jobs, String searchTerm) {
+        Optional<Job> foundJob = jobs.stream()
+                .filter(job -> job.getTitle().contains(searchTerm))
+                .findFirst();
+        foundJob.ifPresent(job -> System.out.println(job.getTitle()));
     }
 
     /**
      * Count words in snippets declaratively
+     *
      * @param jobs
      * @return
      */
@@ -54,6 +99,7 @@ public class App {
 
     /**
      * Count words in snippets imperatively
+     *
      * @param jobs
      * @return
      */
@@ -84,6 +130,7 @@ public class App {
 
     /**
      * Declarative approach to print 3 junior jobs in strings
+     *
      * @param jobs
      * @return
      */
@@ -97,6 +144,7 @@ public class App {
 
     /**
      * Imperative approach to print 3 junior jobs in strings
+     *
      * @param jobs
      * @return
      */
@@ -116,6 +164,7 @@ public class App {
 
     /**
      * Declarative way to get 3 junior jobs
+     *
      * @param jobs
      * @return
      */
@@ -128,6 +177,7 @@ public class App {
 
     /**
      * Imperative approach to print 3 junior jobs
+     *
      * @param jobs
      * @return
      */
@@ -171,10 +221,11 @@ public class App {
 
     /**
      * Helper method
+     *
      * @param job
      * @return
      */
-    private static boolean isJuniorJob(Job job){
+    private static boolean isJuniorJob(Job job) {
         String title = job.getTitle().toLowerCase();
         return title.contains("junior") || title.contains("jr");
     }
