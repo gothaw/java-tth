@@ -69,19 +69,9 @@ public class Main {
     // TODO:  Examine the hardcoded `getArgentinaPriceConverter` method
     // TODO:  Using the arguments passed into this method return a function that will work for any locale and rate
 
-    Function<Integer, BigDecimal> usdToArgentinePesoConverter =
-      usd -> usdRate.multiply(new BigDecimal(usd));
-
-    Function<BigDecimal, String> argentineCurrencyFormatter = price -> {
-      Currency currentCurrency = Currency.getInstance(locale);
-      NumberFormat currencyFormatter =
-        NumberFormat.getCurrencyInstance(locale);
-      return String.format("%s (%s)",
-        currencyFormatter.format(price),
-        currentCurrency.getDisplayName()
-      ).replace("\u00a0\u20ac ", " ");
-    };
-    return usdToArgentinePesoConverter.andThen(argentineCurrencyFormatter);
+    return usdPrice -> String.format("%s (%s)",
+      NumberFormat.getCurrencyInstance(locale).format(usdRate.multiply(BigDecimal.valueOf(usdPrice))),
+      Currency.getInstance(locale).getDisplayName()).replace("\u00a0\u20ac ", " ");
   }
 
 
