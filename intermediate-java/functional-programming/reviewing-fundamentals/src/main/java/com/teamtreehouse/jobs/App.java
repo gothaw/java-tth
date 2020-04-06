@@ -42,10 +42,39 @@ public class App {
         // higherOrderFunctionsEmailFeature(jobs);
 
         // Getting date in Indeed format
-        // displayDateInIndeedFormatForFirstFiveJobs(jobs);
+         displayDateInIndeedFormatForFirstFiveJobs(jobs);
     }
 
     private static void displayDateInIndeedFormatForFirstFiveJobs(List<Job> jobs) {
+
+        Function<String, String> converter = createDateStringConverter(
+                DateTimeFormatter.RFC_1123_DATE_TIME,
+                DateTimeFormatter.ISO_DATE
+        );
+
+        // use parallel stream to calculate on multiple cores, don't use if you have side effects.
+        jobs.stream()
+                .map(Job::getDateTimeString)
+                .map(converter)
+                .limit(5)
+                .forEach(System.out::println);
+    }
+
+    public static Function<String, String> createDateStringConverter(DateTimeFormatter inFormatter, DateTimeFormatter outFormatter) {
+        // This method is lazy amd inFormatter and outFormatter are available for later when `converter` is run
+        // This variable used in lambda expression should be final or effectively final
+        int meaningOfLife = 42;
+        return dateString -> {
+            return meaningOfLife + "----" + LocalDateTime.parse(dateString, inFormatter).format(outFormatter);
+        };
+    }
+
+    /**
+     * Converts RFC_1123 date to Month / Day / Year (2digits)
+     * @return function
+     */
+    public static Function<String, String> indeedDateConverter(){
+
         // Function to get Date from String
         Function<String, LocalDateTime> indeedDateConverter =
                 dateString -> LocalDateTime.parse(
@@ -55,14 +84,7 @@ public class App {
         Function<LocalDateTime, String> siteDateStringConverter =
                 date -> date.format(DateTimeFormatter.ofPattern("M / d / YY"));
 
-        // Chained function
-        Function<String, String> indeedToSiteDate = indeedDateConverter.andThen(siteDateStringConverter);
-
-        jobs.stream()
-                .map(Job::getDateTimeString)
-                .map(indeedToSiteDate)
-                .limit(5)
-                .forEach(System.out::println);
+        return indeedDateConverter.andThen(siteDateStringConverter);
     }
 
     private static void higherOrderFunctionsEmailFeature(List<Job> jobs) {
