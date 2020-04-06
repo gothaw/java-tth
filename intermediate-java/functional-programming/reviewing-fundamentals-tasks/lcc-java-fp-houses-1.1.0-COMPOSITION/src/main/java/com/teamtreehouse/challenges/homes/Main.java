@@ -35,8 +35,8 @@ public class Main {
     Function<BigDecimal, String> argentineCurrencyFormatter = price -> {
       Currency currentCurrency = Currency.getInstance(argLocale);
       NumberFormat currencyFormatter =
-        NumberFormat.getNumberInstance(argLocale);
-      return String.format("$%s (%s)",
+        NumberFormat.getCurrencyInstance(argLocale);
+      return String.format("%s (%s)",
         currencyFormatter.format(price),
         currentCurrency.getDisplayName()
       );
@@ -56,7 +56,7 @@ public class Main {
       record.getRegionName(),
       usFormatter.format(record.getCurrentHomeValueIndex()),
       priceConverter.apply(record.getCurrentHomeValueIndex())
-    );
+    ).replaceAll("\u00a0", "");
   }
 
   public static List<String> getConvertedPriceStatements(List<HousingRecord> records, Function<Integer, String> priceConverter) {
