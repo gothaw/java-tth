@@ -6,22 +6,20 @@ import java.io.Console;
 public class Main {
 
     // CORRECT THE CODE SO YOU DON'T HAVE TO USE SUPPRESS WARNINGS ANNOTATION
-    @SuppressWarnings({"static","fallthrough"})
     public static void main(String[] args) {
         Console console = System.console();
         
         // Get number of posts
         int numPosts = Integer.parseInt(console.readLine("How many posts? "));
-        
-        Blog b = new Blog();
-        
+
         // Fetch latest posts
-        List<Post> posts = b.getLatestPosts(numPosts);
+        List<Post> posts = Blog.getLatestPosts(numPosts);
         
         switch(numPosts) {
         case 0:
             // Display message
             System.out.println("No posts");
+            break;
         case 1:
             // Display post
             System.out.println(posts.get(0));
