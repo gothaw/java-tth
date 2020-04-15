@@ -6,9 +6,10 @@ import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 
 
 public class Main extends Application {
@@ -18,11 +19,17 @@ public class Main extends Application {
         // Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         Group root = new Group();
         Text txt = new Text("Sup?");
+        TextField nameFld = new TextField();
         Button btn = new Button();
+        VBox box = new VBox();
+
         btn.setText("Say Sup!");
-        root.getChildren().add(btn);
-        txt.setY(25);
-        root.getChildren().add(txt);
+        btn.setOnAction(evt -> System.out.printf("Sup %s!? %n", nameFld.getText()));
+        txt.setY(50);
+
+        box.getChildren().addAll(txt, nameFld, btn);
+        root.getChildren().add(box);
+
         primaryStage.setTitle("Sup App");
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
