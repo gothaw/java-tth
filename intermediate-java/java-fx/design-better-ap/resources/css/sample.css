@@ -1,0 +1,19 @@
+.title{
+    -fx-font-size: 80px;
+    -fx-fill: ORANGE
+}
+.root{
+    -fx-font-family: Gabriola;
+    -fx-font-size: 18;
+    -fx-alignment: center;
+    -fx-hgap: 10;
+    -fx-vgap: 10;
+}
+.text-field{
+    -fx-font-family: Helvetica;
+}
+
+#firstName {
+    -fx-background-color: orange;
+    -fx-font-family: Impact;
+}
