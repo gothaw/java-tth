@@ -2,6 +2,7 @@
     -fx-font-size: 80px;
     -fx-fill: ORANGE
 }
+
 .root{
     -fx-font-family: Gabriola;
     -fx-font-size: 18;
@@ -9,6 +10,7 @@
     -fx-hgap: 10;
     -fx-vgap: 10;
 }
+
 .text-field{
     -fx-font-family: Helvetica;
 }
