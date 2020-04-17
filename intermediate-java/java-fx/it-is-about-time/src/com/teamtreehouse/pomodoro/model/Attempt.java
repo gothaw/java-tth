@@ -26,4 +26,22 @@ public class Attempt {
     public void setMessage(String message) {
         mMessage = message;
     }
+
+    public void tick() {
+        mRemainingSeconds--;
+    }
+
+    public void save() {
+        // Mock of the method
+        System.out.printf("Saving: %s %n", this);
+    }
+
+    @Override
+    public String toString() {
+        return "Attempt{" +
+                "mMessage='" + mMessage + '\'' +
+                ", mRemainingSeconds=" + mRemainingSeconds +
+                ", mKind=" + mKind +
+                '}';
+    }
 }
