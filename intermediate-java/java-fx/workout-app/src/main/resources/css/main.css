@@ -4,16 +4,20 @@
     -fx-text-fill: #fff;
 }
 
+.root {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
 #container {
     -fx-background: #35B55C;
-    -fx-pref-width: 500px;
-    -fx-padding: 75px;
+    -fx-padding: 0 75px 75px 75px;
     -fx-spacing: 20px;
 }
 
 
-#title {
-    -fx-font-size: 31px;
+.title {
+    -fx-font-size: 32px;
 }
 
 #time {
@@ -38,10 +42,10 @@
   -fx-background-color: none;
   -fx-text-fill: #fff;
   -fx-fill-width: true;
-  -fx-cursor: pointer;
+  -fx-cursor: hand;
   -fx-padding: 10px 10px 10px 37px;
   -fx-font-size: 20px;
-
+  -fx-pref-width: 150px;
 }
 
 .nested-action {
@@ -75,10 +79,52 @@
     -fx-text-fill: #000;
 }
 
+.attempt-title {
+    -fx-font-size: 32px;
+}
+
+/* Spinner styling */
+
+.spinner-wrapper {
+    -fx-font-size: 16px;
+    -fx-spacing: 15px;
+}
+
+.spinner {
+    -fx-pref-width: 80px;
+}
+
+.spinner .text-field {
+    -fx-border-color: #202428;
+    -fx-background-color: #202428;
+    -fx-border-radius: 0;
+    -fx-background-insets: 0;
+}
+
+.spinner .increment-arrow-button, .spinner .decrement-arrow-button {
+    -fx-background-color: -fx-outer-border, -fx-inner-border,  -fx-body-color;
+    -fx-background-radius: 1.5px;
+    -fx-border-width: 1px;
+}
+
+.spinner:focused .text-field {
+
+
+}
+
+.spinner-separator{
+    -fx-background-color: #202428;
+    -fx-padding: 7px 2px;
+}
+
+
+.spinner .increment-arrow-button, .spinner .decrement-arrow-button {
+    -fx-cursor: hand;
+}
+
 /* State based selectors */
 
 .pause .svg-container {
-    -fx-padding: 0 0 0 25px;
     -fx-spacing: 5px;
 }
 
@@ -100,8 +146,4 @@
 
 .break {
     -fx-background-color: #3F8ABF;;
-}
-
-#pomodoro {
-    -fx-fit-height: 34px;
 }

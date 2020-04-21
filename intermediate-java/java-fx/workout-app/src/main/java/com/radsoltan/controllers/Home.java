@@ -20,8 +20,6 @@ public class Home {
     private VBox container;
     @FXML
     private Label title;
-    @FXML
-    private TextArea message;
 
     private Attempt mCurrentAttempt;
     private StringProperty mTimerText;
@@ -54,7 +52,7 @@ public class Home {
 
     private void prepareAttempt(AttemptKind kind) {
         reset();
-        mCurrentAttempt = new Attempt(kind, "");
+        mCurrentAttempt = new Attempt(kind);
         addAttemptStyle(kind);
         title.setText(kind.getDisplayName());
         setTimerText(mCurrentAttempt.getRemainingSeconds());
@@ -74,7 +72,6 @@ public class Home {
     }
 
     private void saveCurrentAttempt() {
-        mCurrentAttempt.setMessage(message.getText());
         mCurrentAttempt.save();
     }
 

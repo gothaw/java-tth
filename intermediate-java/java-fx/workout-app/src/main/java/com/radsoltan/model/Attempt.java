@@ -1,19 +1,14 @@
 package com.radsoltan.model;
 
 public class Attempt {
-    private String mMessage;
     private int mRemainingSeconds;
     private AttemptKind mKind;
 
-    public Attempt(AttemptKind kind, String message) {
+    public Attempt(AttemptKind kind) {
         mKind = kind;
-        mMessage = message;
         mRemainingSeconds = mKind.getTotalSeconds();
     }
 
-    public String getMessage() {
-        return mMessage;
-    }
 
     public int getRemainingSeconds() {
         return mRemainingSeconds;
@@ -21,10 +16,6 @@ public class Attempt {
 
     public AttemptKind getKind() {
         return mKind;
-    }
-
-    public void setMessage(String message) {
-        mMessage = message;
     }
 
     public void tick() {
@@ -39,8 +30,7 @@ public class Attempt {
     @Override
     public String toString() {
         return "Attempt{" +
-                "mMessage='" + mMessage + '\'' +
-                ", mRemainingSeconds=" + mRemainingSeconds +
+                "mRemainingSeconds=" + mRemainingSeconds +
                 ", mKind=" + mKind +
                 '}';
     }
