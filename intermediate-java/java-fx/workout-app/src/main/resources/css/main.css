@@ -7,13 +7,17 @@
 #container {
     -fx-background: #35B55C;
     -fx-pref-width: 500px;
-    -fx-padding: 75px;
+    -fx-padding: 0 75px 75px 75px;
     -fx-spacing: 20px;
 }
 
 
-#title {
+.title {
     -fx-font-size: 31px;
+}
+
+.attempt-title {
+    -fx-font-size: 20px;
 }
 
 #time {
@@ -41,7 +45,7 @@
   -fx-cursor: pointer;
   -fx-padding: 10px 10px 10px 37px;
   -fx-font-size: 20px;
-
+  -fx-pref-width: 150px;
 }
 
 .nested-action {
@@ -78,7 +82,6 @@
 /* State based selectors */
 
 .pause .svg-container {
-    -fx-padding: 0 0 0 25px;
     -fx-spacing: 5px;
 }
 
@@ -100,8 +103,4 @@
 
 .break {
     -fx-background-color: #3F8ABF;;
-}
-
-#pomodoro {
-    -fx-fit-height: 34px;
 }

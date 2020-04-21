@@ -50,17 +50,17 @@ jlink {
     launcher {
         name = 'workout-app'
     }
-    gradle.taskGraph.whenReady { graph ->
+    /*gradle.taskGraph.whenReady { graph ->
         if (graph.hasTask(":jpackage")) {
             customImage {
                 appModules = ['javafx.base', 'javafx.controls', 'javafx.graphics']
             }
         }
-    }
+    }*/
 }
 
 application {
-    mainClassName = 'com.radsoltan.EntryPoint'
+    mainClassName = 'com.radsoltan/com.radsoltan.EntryPoint'
     group 'com.radsoltan.'
     version '1.0'
 }

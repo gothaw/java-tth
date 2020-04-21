@@ -1,8 +1,8 @@
 package com.radsoltan.model;
 
 public enum AttemptKind {
-    FOCUS(25 * 60, "Focus time"),
-    BREAK(5 * 60, "Break time");
+    FOCUS(5 * 1, "Focus time"),
+    BREAK(5 * 1, "Break time");
 
     private int mTotalSeconds;
     private String mDisplayName;
