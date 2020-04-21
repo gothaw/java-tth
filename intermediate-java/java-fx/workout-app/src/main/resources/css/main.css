@@ -4,6 +4,11 @@
     -fx-text-fill: #fff;
 }
 
+.root {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
 #container {
     -fx-background: #35B55C;
     -fx-padding: 0 75px 75px 75px;
@@ -81,28 +86,37 @@
 /* Spinner styling */
 
 .spinner-wrapper {
-    -fx-spacing: 25px;
     -fx-font-size: 16px;
+    -fx-spacing: 15px;
 }
 
 .spinner {
-    -fx-pref-width: 120px;
+    -fx-pref-width: 80px;
 }
 
 .spinner .text-field {
     -fx-border-color: #202428;
     -fx-background-color: #202428;
-
-}
-
-.spinner {
-    -fx-background-color: -fx-outer-border;
+    -fx-border-radius: 0;
     -fx-background-insets: 0;
-    -fx-background-radius: 5;
-    -fx-focus-color: transparent;
-    -fx-faint-focus-color: transparent;
+}
+
+.spinner .increment-arrow-button, .spinner .decrement-arrow-button {
+    -fx-background-color: -fx-outer-border, -fx-inner-border,  -fx-body-color;
+    -fx-background-radius: 1.5px;
+    -fx-border-width: 1px;
+}
+
+.spinner:focused .text-field {
+
 
 }
+
+.spinner-separator{
+    -fx-background-color: #202428;
+    -fx-padding: 7px 2px;
+}
+
 
 .spinner .increment-arrow-button, .spinner .decrement-arrow-button {
     -fx-cursor: hand;
