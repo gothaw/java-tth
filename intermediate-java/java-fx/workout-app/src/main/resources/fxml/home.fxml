@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 
-<VBox fx:id="container" prefHeight="583.0" prefWidth="541.0" stylesheets="@../css/main.css"
+<VBox fx:id="container" stylesheets="@../css/main.css"
       xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.radsoltan.controllers.Home">
     <children>
@@ -63,15 +63,24 @@
             </children>
         </HBox>
 
-        <VBox fx:id="workoutSetup" prefHeight="200.0" prefWidth="100.0">
+        <Label fx:id="title" styleClass="attempt-title" text="Enter workout and break time"/>
+
+        <VBox fx:id="workoutSetup">
             <children>
-                <Label fx:id="title" styleClass="attempt-title" text="Enter workout and break time below:"/>
-                <HBox prefHeight="100.0" prefWidth="200.0">
+                <HBox styleClass="spinner-wrapper">
                     <children>
-                        <Label text="Break"/>
-                        <Spinner/>
-                        <Label text="Workout"/>
-                        <Spinner/>
+                        <Label styleClass="spinner-label" text="Break [s]"/>
+                        <Spinner styleClass="split-arrows-horizontal">
+                            <valueFactory>
+                                <SpinnerValueFactory.IntegerSpinnerValueFactory min="0" max="10"/>
+                            </valueFactory>
+                        </Spinner>
+                        <Label styleClass="spinner-label" text="Workout [s]"/>
+                        <Spinner styleClass="split-arrows-horizontal">
+                            <valueFactory>
+                                <SpinnerValueFactory.IntegerSpinnerValueFactory min="0" max="10"/>
+                            </valueFactory>
+                        </Spinner>
                     </children>
                 </HBox>
             </children>
