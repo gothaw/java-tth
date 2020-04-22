@@ -9,7 +9,6 @@ public class Attempt {
         mRemainingSeconds = mKind.getTotalSeconds();
     }
 
-
     public int getRemainingSeconds() {
         return mRemainingSeconds;
     }
@@ -20,11 +19,6 @@ public class Attempt {
 
     public void tick() {
         mRemainingSeconds--;
-    }
-
-    public void save() {
-        // Mock of the method
-        System.out.printf("Saving: %s %n", this);
     }
 
     @Override
