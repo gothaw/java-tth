@@ -1,8 +1,8 @@
 package com.radsoltan.controllers;
 
 import com.radsoltan.model.Attempt;
-import com.radsoltan.model.AttemptConfig;
 import com.radsoltan.model.AttemptKind;
+import com.radsoltan.model.AttemptType;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -11,14 +11,9 @@ import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.TextArea;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
-
-import java.lang.annotation.AnnotationTypeMismatchException;
 
 public class Home {
     @FXML
@@ -27,8 +22,9 @@ public class Home {
     private Label title;
 
     private Attempt mCurrentAttempt;
-    private final AttemptConfig breakConfig;
-    private final AttemptConfig workoutConfig;
+    private final AttemptKind breakConfig;
+    private final AttemptKind workoutConfig;
+    private final AttemptKind prepConfig;
     private final StringProperty mTimerText;
     private final StringProperty mBreakTimeConfigText;
     private final StringProperty mWorkoutTimeConfigText;
@@ -44,10 +40,14 @@ public class Home {
         setBreakTimeConfigText(0);
         setWorkoutTimeConfigText(0);
 
-        breakConfig = new AttemptConfig("Break Time!");
-        workoutConfig = new AttemptConfig("Workout!!!");
+        breakConfig = new AttemptKind("break", "Break Time!");
+        workoutConfig = new AttemptKind("workout", "Workout!!!");
+        prepConfig = new AttemptKind("prep", "Prepare for workout", 10);
+
         mSound = new AudioClip(getClass().getResource("/sounds/alarm_beep.wav").toExternalForm());
     }
+
+    /* Getters and Setters */
 
     public String getTimerText() {
         return mTimerText.get();
@@ -62,7 +62,7 @@ public class Home {
     }
 
     public void setTimerText(int remainingSeconds) {
-        setTimerText(prepareTimerString(remainingSeconds));
+        setTimerText(AttemptKind.createTimerString(remainingSeconds));
     }
 
     public String getBreakTimeConfigText() {
@@ -78,7 +78,7 @@ public class Home {
     }
 
     public void setBreakTimeConfigText(int totalSeconds) {
-        setBreakTimeConfigText(prepareTimerString(totalSeconds));
+        setBreakTimeConfigText(AttemptKind.createTimerString(totalSeconds));
     }
 
     public String getWorkoutTimeConfigText() {
@@ -94,16 +94,12 @@ public class Home {
     }
 
     public void setWorkoutTimeConfigText(int totalSeconds) {
-        setWorkoutTimeConfigText(prepareTimerString(totalSeconds));
+        setWorkoutTimeConfigText(AttemptKind.createTimerString(totalSeconds));
     }
 
-    private String prepareTimerString(int totalSeconds) {
-        int minutes = totalSeconds / 60;
-        int seconds = totalSeconds % 60;
-        return String.format("%02d:%02d", minutes, seconds);
-    }
+    /* Prepare Attempt */
 
-    private void prepareAttempt(AttemptKind kind) {
+    private void prepareAttempt(AttemptType kind) {
         reset();
         mCurrentAttempt = new Attempt(kind);
         addAttemptStyle(kind);
@@ -121,7 +117,7 @@ public class Home {
         // Sets an event after timeline is finished
         mTimeline.setOnFinished(e -> {
             mSound.play();
-            prepareAttempt(mCurrentAttempt.getKind() == AttemptKind.FOCUS ? AttemptKind.BREAK : AttemptKind.FOCUS);
+            prepareAttempt(mCurrentAttempt.getKind() == AttemptType.FOCUS ? AttemptType.BREAK : AttemptType.FOCUS);
         });
     }
 
@@ -142,24 +138,26 @@ public class Home {
         mTimeline.pause();
     }
 
-    private void addAttemptStyle(AttemptKind kind) {
+    private void addAttemptStyle(AttemptType kind) {
         container.getStyleClass().add(kind.toString().toLowerCase());
     }
 
     private void clearAttemptStyles() {
         container.getStyleClass().remove("playing");
-        for (AttemptKind kind : AttemptKind.values()) {
+        for (AttemptType kind : AttemptType.values()) {
             container.getStyleClass().remove(kind.toString().toLowerCase());
         }
     }
 
+    /* Button Handlers */
+
     public void handleRestart(ActionEvent actionEvent) {
-        prepareAttempt(AttemptKind.FOCUS);
+        prepareAttempt(AttemptType.FOCUS);
         playTimer();
     }
 
     public void handlePlay(ActionEvent actionEvent) {
-        if (mCurrentAttempt == null){
+        if (mCurrentAttempt == null) {
             handleRestart(actionEvent);
         } else {
             playTimer();
@@ -172,21 +170,21 @@ public class Home {
 
     public void handleBreakTimeIncrease(ActionEvent actionEvent) {
         breakConfig.increaseSeconds();
-        setBreakTimeConfigText(breakConfig.getSeconds());
+        setBreakTimeConfigText(breakConfig.getTotalSeconds());
     }
 
     public void handleBreakTimeDecrease(ActionEvent actionEvent) {
         breakConfig.decreaseSeconds();
-        setBreakTimeConfigText(breakConfig.getSeconds());
+        setBreakTimeConfigText(breakConfig.getTotalSeconds());
     }
 
     public void handleWorkoutTimeIncrease(ActionEvent actionEvent) {
         workoutConfig.increaseSeconds();
-        setWorkoutTimeConfigText(workoutConfig.getSeconds());
+        setWorkoutTimeConfigText(workoutConfig.getTotalSeconds());
     }
 
     public void handleWorkoutTimeDecrease(ActionEvent actionEvent) {
         workoutConfig.decreaseSeconds();
-        setWorkoutTimeConfigText(workoutConfig.getSeconds());
+        setWorkoutTimeConfigText(workoutConfig.getTotalSeconds());
     }
 }

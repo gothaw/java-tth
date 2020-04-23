@@ -2,9 +2,9 @@ package com.radsoltan.model;
 
 public class Attempt {
     private int mRemainingSeconds;
-    private AttemptKind mKind;
+    private AttemptType mKind;
 
-    public Attempt(AttemptKind kind) {
+    public Attempt(AttemptType kind) {
         mKind = kind;
         mRemainingSeconds = mKind.getTotalSeconds();
     }
@@ -13,7 +13,7 @@ public class Attempt {
         return mRemainingSeconds;
     }
 
-    public AttemptKind getKind() {
+    public AttemptType getKind() {
         return mKind;
     }
 
