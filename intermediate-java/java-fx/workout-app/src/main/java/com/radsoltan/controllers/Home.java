@@ -118,11 +118,14 @@ public class Home {
         mTimeline.setOnFinished(e -> {
             mSound.play();
             prepareAttempt(mCurrentAttempt.getKind() == AttemptType.FOCUS ? AttemptType.BREAK : AttemptType.FOCUS);
+            playTimer();
         });
     }
 
     private void reset() {
         clearAttemptStyles();
+        setTimerText(0);
+        mCurrentAttempt = null;
         if (mTimeline != null && mTimeline.getStatus() == Animation.Status.RUNNING) {
             mTimeline.stop();
         }
@@ -152,16 +155,14 @@ public class Home {
     /* Button Handlers */
 
     public void handleRestart(ActionEvent actionEvent) {
-        prepareAttempt(AttemptType.FOCUS);
-        playTimer();
+        reset();
     }
 
     public void handlePlay(ActionEvent actionEvent) {
         if (mCurrentAttempt == null) {
-            handleRestart(actionEvent);
-        } else {
-            playTimer();
+            prepareAttempt(AttemptType.FOCUS);
         }
+        playTimer();
     }
 
     public void handlePause(ActionEvent actionEvent) {
