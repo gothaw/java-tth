@@ -16,7 +16,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/home.fxml"));
         primaryStage.setScene(new Scene(root, 700, 700));
         primaryStage.setResizable(false);
-        primaryStage.setTitle("Smieszkowy Workout App");
+        primaryStage.setTitle("Workout App");
         primaryStage.getIcons().add(new Image(getClass().getResource("/images/cat.png").toExternalForm()));
         primaryStage.show();
     }

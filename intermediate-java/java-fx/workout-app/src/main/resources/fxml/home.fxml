@@ -14,7 +14,7 @@
             </image>
         </ImageView>
 
-        <Label styleClass="title" text="Śmieszkowy Workout App"/>
+        <Label styleClass="title" text="Workout App"/>
 
         <Label fx:id="time" text="${controller.timerText}"/>
 

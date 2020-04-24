@@ -49,7 +49,7 @@ jlink {
         }
     }
     launcher {
-        name = 'workout-app'
+        name = 'Workout App'
     }
 }
 
