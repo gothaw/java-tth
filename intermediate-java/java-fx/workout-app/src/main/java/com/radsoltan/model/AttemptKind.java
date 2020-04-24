@@ -44,13 +44,13 @@ public class AttemptKind {
 
     public void decreaseSeconds() {
         if (mTotalSeconds > 0) {
-            mTotalSeconds = mTotalSeconds - 15;
+            mTotalSeconds = mTotalSeconds - 5;
         }
     }
 
     public void increaseSeconds() {
         if (mTotalSeconds < 60 * 60) {
-            mTotalSeconds = mTotalSeconds + 15;
+            mTotalSeconds = mTotalSeconds + 5;
         }
     }
 
