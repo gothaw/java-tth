@@ -8,5 +8,5 @@ public class Constants {
     public static final String PREP_DESC = "Prepare for workout...";
     public static final String WORKOUT_DESC = "Workout!!!";
     public static final String BREAK_DESC = "Break Time!";
-    public static final int PREP_DURATION = 10;
+    public static final int PREP_DURATION = 5;
 }

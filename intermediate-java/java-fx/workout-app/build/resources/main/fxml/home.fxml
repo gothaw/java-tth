@@ -68,7 +68,7 @@
             <children>
                 <HBox styleClass="spinner-wrapper">
                     <children>
-                        <Label styleClass="spinner-label" text="Workout"/>
+                        <Label styleClass="spinner-label" text="Workout:"/>
                         <HBox>
                             <Label fx:id="workoutTimeConfig" styleClass="spinner-field" text="${controller.workoutTimeConfigText}"/>
                             <VBox>
@@ -94,7 +94,7 @@
                                 </StackPane>
                             </VBox>
                         </HBox>
-                        <Label styleClass="spinner-label" text="Break"/>
+                        <Label styleClass="spinner-label" text="Break:"/>
                         <HBox>
                             <Label fx:id="breakTimeConfig" styleClass="spinner-field" text="${controller.breakTimeConfigText}"/>
                             <VBox>

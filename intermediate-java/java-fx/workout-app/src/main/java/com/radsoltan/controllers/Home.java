@@ -15,6 +15,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Home {
     @FXML
     private VBox container;
@@ -30,6 +33,7 @@ public class Home {
     private final StringProperty mWorkoutTimeConfigText;
     private Timeline mTimeline;
     private final AudioClip mSound;
+    private final List<String> mStyles;
 
     public Home() {
         mTimerText = new SimpleStringProperty();
@@ -44,7 +48,9 @@ public class Home {
         mWorkout = new AttemptKind(Constants.WORKOUT_NAME, Constants.WORKOUT_DESC);
         mPrep = new AttemptKind(Constants.PREP_NAME, Constants.PREP_DESC, Constants.PREP_DURATION);
 
-        mSound = new AudioClip(getClass().getResource("/sounds/alarm_beep.wav").toExternalForm());
+        mStyles = new ArrayList<>(List.of(Constants.PREP_NAME, Constants.WORKOUT_NAME, Constants.BREAK_NAME));
+
+        mSound = new AudioClip(getClass().getResource("/sounds/alarm.wav").toExternalForm());
     }
 
     /* Getters and Setters */
@@ -117,7 +123,11 @@ public class Home {
         // Sets an event after timeline is finished
         mTimeline.setOnFinished(e -> {
             mSound.play();
-            prepareAttempt(mCurrentAttempt.getKind() == mWorkout ? mBreak : mWorkout);
+            if (mCurrentAttempt.getKind() == mPrep) {
+                prepareAttempt(mWorkout);
+            } else {
+                prepareAttempt(mCurrentAttempt.getKind() == mWorkout ? mBreak : mWorkout);
+            }
             playTimer();
         });
     }
@@ -148,8 +158,9 @@ public class Home {
 
     private void clearAttemptStyles() {
         container.getStyleClass().remove("playing");
-        container.getStyleClass().remove(mBreak.getName().toLowerCase());
-        container.getStyleClass().remove(mWorkout.getName().toLowerCase());
+        for (String style : mStyles) {
+            container.getStyleClass().remove(style);
+        }
     }
 
     /* Button Handlers */
@@ -161,7 +172,7 @@ public class Home {
     public void handlePlay(ActionEvent actionEvent) {
         if (mBreak.getTotalSeconds() > 0 && mWorkout.getTotalSeconds() > 0) {
             if (mCurrentAttempt == null) {
-                prepareAttempt(mWorkout);
+                prepareAttempt(mPrep);
             }
             playTimer();
         }
