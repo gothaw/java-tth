@@ -1,5 +1,7 @@
 package com.radsoltan.courses;
 
+import com.radsoltan.courses.model.CourseIdeaDAO;
+import com.radsoltan.courses.model.SimpleCourseIdeaDAO;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -10,6 +12,9 @@ import static spark.Spark.*;
 
 public class Main {
     public static void main(String[] args) {
+        staticFileLocation("/public");
+        CourseIdeaDAO dao = new SimpleCourseIdeaDAO();
+
         get("/", (request, response) -> {
             Map<String, String> model = new HashMap<>();
             model.put("username", request.cookie("username"));
