@@ -2,6 +2,7 @@ package com.radsoltan.courses;
 
 import com.radsoltan.courses.model.CourseIdea;
 import com.radsoltan.courses.model.CourseIdeaDAO;
+import com.radsoltan.courses.model.NotFoundException;
 import com.radsoltan.courses.model.SimpleCourseIdeaDAO;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -77,5 +78,12 @@ public class Main {
 
             return new ModelAndView(model, "idea.hbs");
         }, new HandlebarsTemplateEngine());
+
+        exception(NotFoundException.class, (exception, request, response) -> {
+           response.status(404);
+           HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine(); // Building custom model and view
+           String html = engine.render(new ModelAndView(null, "not-found.hbs"));
+           response.body(html);
+        });
     }
 }
