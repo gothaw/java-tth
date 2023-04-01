@@ -16,30 +16,44 @@ public class Main {
         staticFileLocation("/public");
         CourseIdeaDAO dao = new SimpleCourseIdeaDAO();
 
+        before(((request, response) -> {
+            String username = request.cookie("username");
+
+            if (username != null) {
+                request.attribute("username", username);
+            }
+        }));
+
+        before("/ideas", ((request, response) -> {
+            // TODO: 01/04/2023 Add a flash message
+            if (request.attribute("username") == null) {
+                response.redirect("/");
+                halt();
+            }
+        }));
+
         get("/", (request, response) -> {
             Map<String, String> model = new HashMap<>();
-            model.put("username", request.cookie("username"));
+            model.put("username", request.attribute("username"));
 
             return new ModelAndView(model, "index.hbs");
         }, new HandlebarsTemplateEngine());
 
         post("/sign-in", (request, response) -> {
-            Map<String, String> model = new HashMap<>();
             String username = request.queryParams("username");
             response.cookie("username", username);
-            model.put("username", username);
+            response.redirect("/");
 
-            return new ModelAndView(model, "sign-in.hbs");
-        }, new HandlebarsTemplateEngine());
+            return null;
+        });
 
         post("/ideas", (request, response) -> {
             String title = request.queryParams("title");
-            // TODO: 01/04/2023 This username is tied to the cookie implementation
-            CourseIdea courseIdea = new CourseIdea(title, request.cookie("username"));
+            CourseIdea courseIdea = new CourseIdea(title, request.attribute("username"));
             dao.add(courseIdea);
             response.redirect("/ideas");
             return null;
-        }, new HandlebarsTemplateEngine());
+        });
 
         get("/ideas", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
