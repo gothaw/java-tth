@@ -1,14 +1,23 @@
 package com.radsoltan.courses.model;
 
+import com.github.slugify.Slugify;
+
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class CourseIdea {
-    private String title;
-    private String creator;
+    private final String title;
+    private final String creator;
+    private final String slug;
+    private Set<String> voters;
 
     public CourseIdea(String title, String creator) {
+        voters = new HashSet<>();
         this.title = title;
         this.creator = creator;
+        Slugify slugify = Slugify.builder().build();
+        slug = slugify.slugify(title);
     }
 
     public String getTitle() {
@@ -17,6 +26,16 @@ public class CourseIdea {
 
     public String getCreator() {
         return creator;
+    }
+
+    public String getSlug() { return slug; }
+
+    public boolean addVoter(String voterUserName) {
+        return voters.add(voterUserName); // calling ad on set return true or false
+    }
+
+    public int getVoteCount() {
+        return voters.size();
     }
 
     @Override

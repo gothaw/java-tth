@@ -62,5 +62,12 @@ public class Main {
 
             return new ModelAndView(model, "ideas.hbs");
         }, new HandlebarsTemplateEngine());
+
+        post("/ideas/:slug/vote", (request, response) -> {
+            CourseIdea courseIdea = dao.findBySlug(request.params("slug"));
+            courseIdea.addVoter(request.attribute("username"));
+            response.redirect("/ideas");
+            return null;
+        });
     }
 }
