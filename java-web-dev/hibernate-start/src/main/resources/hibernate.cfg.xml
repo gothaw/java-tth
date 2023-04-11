@@ -6,8 +6,10 @@
         <!-- SQL dialect -->
         <property name="dialect">org.hibernate.dialect.H2Dialect</property>
 
-        <!-- Create the database scheme on app start up -->
-        <property name="hbm2ddl.auto">create</property>
+        <!-- Update the database scheme on app start up, change to create to wipe data on start up -->
+        <property name="hbm2ddl.auto">update</property>
+
+        <!--To add logging - you need specific tool log4j2-->
 
         <!-- Name the annotated entity classes -->
         <mapping class="com.radsoltan.model.Contact" />
